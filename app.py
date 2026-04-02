@@ -1,18 +1,19 @@
 from flask import Flask, request, jsonify
 import mysql.connector
 
-app = Flask(__name__)
+try:
+    db = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="yourpassword",
+        database="college"
+    )
+    cursor = db.cursor()
+    print("Database connected")
 
-# Database connection
-db = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="Arirang",
-    database="college"
-)
-
-cursor = db.cursor()
-
+except:
+    print("Database not connected")
+    
 # CREATE Student
 @app.route('/students', methods=['POST'])
 def add_student():
